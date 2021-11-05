@@ -7,7 +7,7 @@ YOUTUBE_API_VERSION = 'v3'
 
 
 def search_videos(search_string, pageToken,
-                  order='rating', videoLicense='creativeCommon'):
+                  order, videoLicense):
     youtube = build(YOUTUBE_API_SERVICE_NAME,
                     YOUTUBE_API_VERSION,
                     developerKey=DEVELOPER_KEY)
