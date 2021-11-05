@@ -9,14 +9,16 @@ from search import search_videos
 
 
 def collect_data(options):
+    search_string = args.search_string.replace(' ', '-').lower()
+    filepath = f'search_data/{search_string}_data.pickle'
     data = {}
     try:
-        with open('data/data.pickle', 'rb') as f:
+        with open(filepath, 'rb') as f:
             data = pickle.load(f)
         print('📙 Data file loaded.')
     except FileNotFoundError:
-        if not os.path.exists("data/"):
-            os.makedirs("data/")
+        if not os.path.exists("search_data/"):
+            os.makedirs("search_data/")
         print('⚠️ Data file not found. Proceeding...')
 
     parsed_amount = 0
@@ -64,7 +66,7 @@ def collect_data(options):
                                  'transcripts': transcripts,
                                  }})
                         print('👌 Got transcripts! 👌')
-                        with open('data/data.pickle', 'wb') as f:
+                        with open(filepath, 'wb') as f:
                             pickle.dump(data, f)
                         parsed_amount += 1
                     except BaseException:
@@ -81,6 +83,12 @@ def collect_data(options):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Collect transcripts.')
+    parser.add_argument(
+        '--filename',
+        type=str,
+        help='''Specify search data filename
+                if it exists or provide new.'''
+    )
     parser.add_argument(
         '--amount',
         type=int,
