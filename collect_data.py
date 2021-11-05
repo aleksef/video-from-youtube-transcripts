@@ -8,18 +8,17 @@ from youtube_transcript_api import YouTubeTranscriptApi
 from search import search_videos
 
 
-data = {}
-try:
-    with open('data/data.pickle', 'rb') as f:
-        data = pickle.load(f)
-    print('📙 Data file loaded.')
-except FileNotFoundError:
-    if not os.path.exists("data/"):
-        os.makedirs("data/")
-    print('⚠️ Data file not found. Proceeding...')
-
-
 def collect_data(options):
+    data = {}
+    try:
+        with open('data/data.pickle', 'rb') as f:
+            data = pickle.load(f)
+        print('📙 Data file loaded.')
+    except FileNotFoundError:
+        if not os.path.exists("data/"):
+            os.makedirs("data/")
+        print('⚠️ Data file not found. Proceeding...')
+
     parsed_amount = 0
     next_token = ''
     print('Starting to parse videos...')
