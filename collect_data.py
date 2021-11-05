@@ -47,7 +47,7 @@ def collect_data(options):
                 try:
                     video = pafy.new(v_id)
                 except BaseException:
-                    print("🤔 Its probably a Pafy's fault.")
+                    print("🤔 Its probably Pafy's fault.")
                     continue
                 duration_sec = video.length
 
