@@ -59,7 +59,8 @@ def collect_data(options):
                         transcripts = next(iter(trs[0].values()))
                         data.update(
                             {v_id:
-                                {'filepath': '',
+                                {'title': video.title,
+                                 'filepath': '',
                                  'transcripts': transcripts,
                                  }})
                         print('👌 Got transcripts! 👌')
