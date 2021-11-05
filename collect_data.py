@@ -90,13 +90,13 @@ if __name__ == '__main__':
         '--amount',
         type=int,
         default=5,
-        help='Amount od videos to parse(default: 25)'
+        help='Amount od videos to parse(default: 5)'
     )
     parser.add_argument(
         '--sec',
         type=int,
         default=60,
-        help='Video max length in seconds (default: 300)'
+        help='Video max length in seconds (default: 60)'
     )
     parser.add_argument(
         '--search_string',
