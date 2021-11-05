@@ -1,3 +1,4 @@
+import os
 import argparse
 import pickle
 import pafy
@@ -14,6 +15,9 @@ try:
         data = pickle.load(f)
     print('📙 Data file loaded.')
 except FileNotFoundError:
+    # mkdir
+    if not os.path.exists("data/"):
+        os.makedirs("data/")
     print('⚠️ Data file not found. Proceeding...')
 
 
