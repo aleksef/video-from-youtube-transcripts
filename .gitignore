@@ -3,6 +3,7 @@ __pycache__
 .mypy_cache
 .vscode
 env
-data
+search_data
 downloaded_vids
 key.json
+chunks
