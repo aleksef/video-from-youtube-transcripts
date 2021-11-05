@@ -23,8 +23,10 @@ def collect_data(options):
     print('Starting to parse videos...')
     while parsed_amount < args.amount:
         # Search videos
-        search_response = search_videos(search_string='hi herbert',
-                                        pageToken=next_token)
+        search_response = search_videos(search_string=args.search_string,
+                                        pageToken=next_token,
+                                        order=args.order,
+                                        videoLicense=args.license)
         next_token = search_response.get('nextPageToken', [])
         items = search_response.get('items', [])
         if not items:
@@ -97,6 +99,18 @@ if __name__ == '__main__':
         type=str,
         default="fun",
         help='Search string (default="fun")'
+    )
+    parser.add_argument(
+        '--order',
+        type=str,
+        default="rating",
+        help='Set order (default="rating")'
+    )
+    parser.add_argument(
+        '--license',
+        type=str,
+        default="youtube",
+        help='Set license type (default="youtube")'
     )
     args = parser.parse_args()
 
