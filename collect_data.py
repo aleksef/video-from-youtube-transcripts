@@ -8,14 +8,12 @@ from youtube_transcript_api import YouTubeTranscriptApi
 from search import search_videos
 
 
-# Load data file if it exists
 data = {}
 try:
     with open('data/data.pickle', 'rb') as f:
         data = pickle.load(f)
     print('📙 Data file loaded.')
 except FileNotFoundError:
-    # mkdir
     if not os.path.exists("data/"):
         os.makedirs("data/")
     print('⚠️ Data file not found. Proceeding...')
@@ -26,7 +24,6 @@ def collect_data(options):
     next_token = ''
     print('Starting to parse videos...')
     while parsed_amount < args.amount:
-        # Search videos
         search_response = search_videos(search_string=args.search_string,
                                         pageToken=next_token,
                                         order=args.order,
@@ -61,14 +58,12 @@ def collect_data(options):
                             [v_id],
                             languages=['en'])
                         transcripts = next(iter(trs[0].values()))
-                        # update data dict
                         data.update(
                             {v_id:
                                 {'filepath': '',
                                  'transcripts': transcripts,
                                  }})
                         print('👌 Got transcripts! 👌')
-                        # save
                         with open('data/data.pickle', 'wb') as f:
                             pickle.dump(data, f)
                         parsed_amount += 1
