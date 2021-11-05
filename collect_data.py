@@ -85,7 +85,7 @@ def collect_data(options):
 
 
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser(description='Search and collect data.')
+    parser = argparse.ArgumentParser(description='Collect transcripts.')
     parser.add_argument(
         '--amount',
         type=int,
