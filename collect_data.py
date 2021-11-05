@@ -87,7 +87,9 @@ if __name__ == '__main__':
         'filename',
         type=str,
         help='''Specify search data filename
-                if it exists or provide new.'''
+                if it exists or provide new.
+                All search data files are stored in
+                search_data folder.'''
     )
     parser.add_argument(
         '--amount',
