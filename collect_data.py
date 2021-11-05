@@ -9,16 +9,22 @@ from search import search_videos
 
 
 def collect_data(options):
+    if not os.path.exists("search_data/"):
+        os.makedirs("search_data/")
+
     search_string = args.search_string.replace(' ', '-').lower()
-    filepath = f'search_data/{search_string}_data.pickle'
+    filepath = None
+    if args.filename is not None:
+        filepath = f'search_data/{args.filename}'
+    else:
+        filepath = f'search_data/{search_string}_data.pickle'
+
     data = {}
     try:
         with open(filepath, 'rb') as f:
             data = pickle.load(f)
         print('📙 Data file loaded.')
     except FileNotFoundError:
-        if not os.path.exists("search_data/"):
-            os.makedirs("search_data/")
         print('⚠️ Data file not found. Proceeding...')
 
     parsed_amount = 0
@@ -84,12 +90,12 @@ def collect_data(options):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Collect transcripts.')
     parser.add_argument(
-        'filename',
+        '--filename',
         type=str,
         help='''Specify search data filename
-                if it exists or provide new.
+                if it exists.
                 All search data files are stored in
-                search_data folder.'''
+                /search_data/ dir.'''
     )
     parser.add_argument(
         '--amount',
