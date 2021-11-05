@@ -42,8 +42,8 @@ def download_vids(options):
             print("Download error.")
         finally:
             if not os.path.exists(data[key]['filepath']):
-                data[key]['filepath'] = ""
-                print("File wasn't downloaded. Maybe try again later?")
+                del data[key]
+                print("File wasn't downloaded. Element removed from data")
 
 
 if __name__ == '__main__':
