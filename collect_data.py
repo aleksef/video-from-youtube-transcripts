@@ -6,6 +6,7 @@ import pafy
 from youtube_transcript_api import YouTubeTranscriptApi
 
 from search import search_videos
+from chunk_data import chunk_data
 
 
 def collect_data(options):
@@ -31,12 +32,18 @@ def collect_data(options):
     next_token = ''
     print('Starting to parse videos...')
     while parsed_amount < args.amount:
-        search_response = search_videos(search_string=args.search_string,
-                                        pageToken=next_token,
-                                        order=args.order,
-                                        videoLicense=args.license)
-        next_token = search_response.get('nextPageToken', [])
-        items = search_response.get('items', [])
+        try:
+            search_response = search_videos(search_string=args.search_string,
+                                            pageToken=next_token,
+                                            order=args.order,
+                                            videoLicense=args.license)
+            next_token = search_response.get('nextPageToken', [])
+            items = search_response.get('items', [])
+        except BaseException:
+            print("Probably exceeded youtube quota. Try again later.")
+            # TODO maybe waiting will help
+            return
+
         if not items:
             print('😅 Found nothing for your request.')
             break
@@ -85,6 +92,11 @@ def collect_data(options):
             break
         print('Parsing next page')
     print(f"Finished parsing. Got transcripts from {parsed_amount} videos.")
+
+    # Chunk data
+    chunk_data(filepath=filepath, name=search_string)
+    print("Chunked data.")
+    print("Done.")
 
 
 if __name__ == '__main__':

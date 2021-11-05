@@ -1,13 +1,12 @@
 import os
 import pickle
-import argparse
 import uuid
 
 
-def chunk_data(options):
+def chunk_data(data_filepath, name):
     if not os.path.exists("chunks/"):
         os.makedirs("chunks/")
-    filepath = f"chunks/chunks_{uuid.uuid1()}/"
+    filepath = f"chunks/{name}/"
     if not os.path.exists(filepath):
         os.makedirs(filepath)
     data = {}
@@ -16,7 +15,7 @@ def chunk_data(options):
 
     # load data
     try:
-        with open(args.filepath, 'rb') as f:
+        with open(data_filepath, 'rb') as f:
             data = pickle.load(f)
     except FileNotFoundError:
         print('⚠️ Data file not found. Stopping script.')
@@ -43,18 +42,3 @@ def chunk_data(options):
             with open(f"{filepath}chunks.txt", "w") as text_file:
                 text_file.write(chunks_txt)
     print(f"Done. Chunked data to {filepath}")
-
-
-if __name__ == '__main__':
-    parser = argparse.ArgumentParser(description='Make chunks from data file.')
-    parser.add_argument(
-        'filepath',
-        type=str,
-        help='Search data filepath.'
-    )
-    args = parser.parse_args()
-
-    try:
-        chunk_data(args)
-    except BaseException as e:
-        print('An error %d occurred:\n%s' % (e.resp.status, e.content))
