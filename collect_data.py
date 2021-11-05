@@ -23,7 +23,7 @@ def collect_data(options):
     print('Starting to parse videos...')
     while parsed_amount < args.amount:
         # Search videos
-        search_response = search_videos(search_string='fun',
+        search_response = search_videos(search_string='hi herbert',
                                         pageToken=next_token)
         next_token = search_response.get('nextPageToken', [])
         items = search_response.get('items', [])
@@ -33,6 +33,8 @@ def collect_data(options):
 
         for i, search_result in enumerate(items):
             print(f"Parsing video {i}/{len(items)}")
+            if parsed_amount == args.amount:
+                break
             if search_result['id']['videoId'] in data:
                 print("👌 Video already exists. 👌")
                 parsed_amount += 1
@@ -60,6 +62,9 @@ def collect_data(options):
                                  'transcripts': transcripts,
                                  }})
                         print('👌 Got transcripts! 👌')
+                        # save
+                        with open('data/data.pickle', 'wb') as f:
+                            pickle.dump(data, f)
                         parsed_amount += 1
                     except BaseException:
                         print('🤔 No transcripts :(')
@@ -69,9 +74,6 @@ def collect_data(options):
                 print('🤔 Not a video?')
         if not next_token:
             break
-        # save
-        with open('data/data.pickle', 'wb') as f:
-            pickle.dump(data, f)
         print('Parsing next page')
     print(f"Finished parsing. Got transcripts from {parsed_amount} videos.")
 
@@ -87,7 +89,7 @@ if __name__ == '__main__':
     parser.add_argument(
         '--sec',
         type=int,
-        default=300,
+        default=60,
         help='Video max length in seconds (default: 300)'
     )
     parser.add_argument(
