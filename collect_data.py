@@ -84,7 +84,7 @@ def collect_data(options):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Collect transcripts.')
     parser.add_argument(
-        '--filename',
+        'filename',
         type=str,
         help='''Specify search data filename
                 if it exists or provide new.'''
