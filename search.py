@@ -18,7 +18,7 @@ def search_videos(search_string, pageToken,
     search_response = youtube.search().list(
         part="snippet",
         type="video",
-        maxResults=25,
+        maxResults=500,
         q=search_string,
         pageToken=pageToken,
         order=order,
