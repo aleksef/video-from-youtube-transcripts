@@ -94,7 +94,7 @@ def collect_data(options):
     print(f"Finished parsing. Got transcripts from {parsed_amount} videos.")
 
     # Chunk data
-    chunk_data(filepath=filepath, name=search_string)
+    chunk_data(data_filepath=filepath, name=search_string)
     print("Chunked data.")
     print("Done.")
 
@@ -118,7 +118,7 @@ if __name__ == '__main__':
     parser.add_argument(
         '--sec',
         type=int,
-        default=60,
+        default=300,
         help='Video max length in seconds (default: 60)'
     )
     parser.add_argument(
